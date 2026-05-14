@@ -1,0 +1,57 @@
+@keyframes bounce-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.bounce-cute {
+    animation: bounce-subtle 2s infinite ease-in-out;
+}
+
+#timer-display {
+    font-variant-numeric: tabular-nums;
+}
+
+#progress-ring {
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Custom Scrollbar for the cute look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Transition for session switching */
+body.break-mode {
+    background-color: #064e3b;
+}
+
+body.break-mode #session-label {
+    color: #6ee7b7;
+}
+
+body.break-mode #progress-ring {
+    color: #10b981;
+}
+
+body.break-mode #start-pause-btn {
+    background-color: #10b981;
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+}
+
+body.break-mode .border-pink-400\/20 {
+    border-color: rgba(16, 185, 129, 0.2);
+}
