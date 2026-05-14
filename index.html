@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코다리 부장의 큐트 뽀모도로</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Fredoka', 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-white min-h-screen flex items-center justify-center p-4 transition-colors duration-500" id="body">
+    <div class="max-w-md w-full bg-[#1e293b] rounded-[3rem] p-8 shadow-2xl border-4 border-pink-400/20 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="flex justify-center mb-2">
+                <span class="text-4xl" id="status-emoji">🔥</span>
+            </div>
+            <h1 class="text-2xl font-bold text-pink-300" id="session-label">집중 시간!</h1>
+            <p class="text-slate-400 text-sm mt-1">대표님, 할 수 있습니다! 😎</p>
+        </div>
+
+        <!-- Timer Display -->
+        <div class="relative flex items-center justify-center mb-10">
+            <svg class="w-64 h-64 transform -rotate-90">
+                <circle
+                    cx="128"
+                    cy="128"
+                    r="120"
+                    stroke="currentColor"
+                    stroke-width="8"
+                    fill="transparent"
+                    class="text-slate-800"
+                ></circle>
+                <circle
+                    id="progress-ring"
+                    cx="128"
+                    cy="128"
+                    r="120"
+                    stroke="currentColor"
+                    stroke-width="12"
+                    stroke-dasharray="754"
+                    stroke-dashoffset="0"
+                    stroke-linecap="round"
+                    fill="transparent"
+                    class="text-pink-500 transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.5)]"
+                ></circle>
+            </svg>
+            <div class="absolute text-6xl font-bold tracking-tighter" id="timer-display">
+                25:00
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex flex-col gap-4">
+            <div class="flex justify-center gap-4">
+                <button id="start-pause-btn" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-pink-500/30 transition-all active:scale-95 text-lg">
+                    시작!
+                </button>
+                <button id="reset-btn" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 px-8 rounded-2xl transition-all active:scale-95">
+                    초기화
+                </button>
+            </div>
+            
+            <div class="flex justify-center gap-2 mt-2">
+                <button id="focus-mode-btn" class="px-4 py-2 rounded-full bg-pink-500/20 text-pink-300 text-sm font-semibold border border-pink-500/50 transition-all">
+                    집중 (25m)
+                </button>
+                <button id="break-mode-btn" class="px-4 py-2 rounded-full bg-slate-800 text-slate-400 text-sm font-semibold border border-transparent hover:border-slate-600 transition-all">
+                    휴식 (5m)
+                </button>
+            </div>
+        </div>
+
+        <!-- Weekly Stats -->
+        <div class="mt-10 pt-8 border-t border-slate-700/50">
+            <h2 class="text-sm font-bold text-slate-400 mb-6 flex items-center gap-2">
+                <span class="text-lg">📊</span> 주간 집중 현황
+            </h2>
+            <div class="flex justify-between items-end h-32 gap-2 px-2" id="chart-container">
+                <!-- Bars will be injected here -->
+                <div class="flex flex-col items-center gap-2 flex-1 group">
+                    <div class="w-full bg-slate-800 rounded-t-lg relative h-0 transition-all duration-1000 group-hover:bg-pink-500/40" style="height: 0%">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity">0m</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-bold">월</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1 group">
+                    <div class="w-full bg-slate-800 rounded-t-lg relative h-0 transition-all duration-1000 group-hover:bg-pink-500/40" style="height: 0%">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity">0m</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-bold">화</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1 group">
+                    <div class="w-full bg-slate-800 rounded-t-lg relative h-0 transition-all duration-1000 group-hover:bg-pink-500/40" style="height: 0%">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity">0m</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-bold">수</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1 group">
+                    <div class="w-full bg-slate-800 rounded-t-lg relative h-0 transition-all duration-1000 group-hover:bg-pink-500/40" style="height: 0%">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity">0m</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-bold">목</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1 group">
+                    <div class="w-full bg-slate-800 rounded-t-lg relative h-0 transition-all duration-1000 group-hover:bg-pink-500/40" style="height: 0%">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity">0m</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-bold">금</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1 group">
+                    <div class="w-full bg-slate-800 rounded-t-lg relative h-0 transition-all duration-1000 group-hover:bg-pink-500/40" style="height: 0%">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity">0m</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-bold">토</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1 group">
+                    <div class="w-full bg-slate-800 rounded-t-lg relative h-0 transition-all duration-1000 group-hover:bg-pink-500/40" style="height: 0%">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity">0m</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-bold">일</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-10 text-center text-slate-500 text-xs">
+            Created by <span class="text-pink-400 font-bold">코다리 개발부장</span> 🫡
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
